@@ -7,7 +7,7 @@ export default class ItemStatusFilter extends React.Component {
 
     render() {
           return (
-        <div className="btn-group">
+        <div className="btn-group float-right">
           <button type="button"
                   className="btn btn-info">All</button>
           <button type="button"
