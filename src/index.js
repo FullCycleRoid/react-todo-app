@@ -5,31 +5,60 @@ import AppHeader from './components/app-header';
 import SearchPanel from './components/search-panel';
 import TodoList from './components/todo-list';
 import ItemStatusFilter from './components/item-status-filter';
+import AddItemForm from './components/add-item-form';
 
 import './index.css';
 
-const App = () => {
+export default class App extends React.Component {
 
-    const todoData = [
-        { label: 'Drink Coffee', important: false, id:1},
-        { label: 'Make Awesome App', important: true, id:2 },
-        { label: 'Have a lunch', important: false, id:3 }
-    ];
+    constructor(){
+            super();
+            this.state = {
+            todoData: [
+                { label: 'Drink Coffee', important: false, id:1},
+                { label: 'Make Awesome App', important: true, id:2 },
+                { label: 'Have a lunch', important: false, id:3 }
+            ]
+        };
+        this.deleteItem = (id) => {
+            this.setState( ({ todoData }) => {
+                const idx = todoData.findIndex((el) => el.id === id );
+                const newArr = [
+                    ...todoData.splice(0, idx),
+                    ...todoData.splice(idx+1)
+                ];
+                return {
+                    todoData: newArr
+                };
+            });
+        };
 
-    return (
-        <div className="todo-app">
-            <AppHeader toDo={1} done={3}/>
-                <div className="top-panel d-flex">
-                    <ItemStatusFilter />
-                    <SearchPanel />
-                </div>
+        this.addForm = (text) => {
 
-            <TodoList
-            onDeleted={ (id) => console.log('del', id)}
-            todos={todoData} />
-        </div>
-    )
-}
+            return  console.log('add new task')
+
+        };
+    };
+    render() {
+
+        return (
+            <div className="todo-app">
+                <AppHeader toDo={1} done={3}/>
+                    <div className="top-panel d-flex">
+                        <ItemStatusFilter />
+                        <SearchPanel />
+                    </div>
+
+                <TodoList
+                    onDeleted={ this.deleteItem }
+                    todos={ this.state.todoData } />
+                <AddItemForm
+                 addForm={ this.addForm }/>
+            </div>
+        );
+    };
+};
+
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
