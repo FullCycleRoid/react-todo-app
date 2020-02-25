@@ -34,9 +34,13 @@ export default class App extends React.Component {
         };
 
         this.addForm = (text) => {
-
             return  console.log('add new task')
-
+        };
+        this.OnToggleImportant = (id) => {
+            console.log('toggle important', id)
+        };
+        this.OnToggleDone = (id) => {
+            console.log('toggle done', id)
         };
     };
     render() {
@@ -51,7 +55,9 @@ export default class App extends React.Component {
 
                 <TodoList
                     onDeleted={ this.deleteItem }
-                    todos={ this.state.todoData } />
+                    todos={ this.state.todoData }
+                    OnToggleDone = { this.OnToggleDone}
+                    OnToggleImportant = { this.OnToggleImportant} />
                 <AddItemForm
                  addForm={ this.addForm }/>
             </div>
